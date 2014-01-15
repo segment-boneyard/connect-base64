@@ -3,6 +3,8 @@
 
   Connect middleware for decoding base64 requests from a querystring parameter and adding them to the request body
 
+  [![Build Status](https://travis-ci.org/segmentio/connect-base64.png?branch=master)](https://travis-ci.org/segmentio/connect-base64)
+
 ## Usage
 
 ### connect-base64([key])
