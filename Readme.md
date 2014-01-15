@@ -1,9 +1,32 @@
 
 # connect-base64
 
-  Connect middleware for decoding base64 requests and adding them to the request body
+  Connect middleware for decoding base64 requests from a querystring parameter and adding them to the request body
 
-## License 
+## Usage
+
+### connect-base64([key])
+
+  Takes a string `key`, or uses the `data` parameter by default. The key is read from the querystring and then used as the request body.
+
+```js
+var base64 = require('connect-base64')
+var express = require('express');
+var request = require('superagent');
+
+var app = express()
+  .use(base64())
+  .all('/', function (req, res) {
+    res.send(req.body);
+  });
+
+request(app)
+  .get('/')
+  .query({ data: new Buffer('test').toString('base64') })
+  .expect(200, done); // response: 'test'
+```
+
+## License
 
 (The MIT License)
 
