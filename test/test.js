@@ -16,7 +16,7 @@ describe('connect-base64', function () {
 
     request(app)
       .get('/')
-      .query({ data: new Buffer(body).toString('base64') })
+      .query({ data: encode(body) })
       .expect(200, done);
   });
 
@@ -31,7 +31,7 @@ describe('connect-base64', function () {
 
     request(app)
       .get('/')
-      .query({ x: new Buffer(body).toString('base64') })
+      .query({ x: encode(body) })
       .expect(200, done);
   });
 
@@ -46,7 +46,7 @@ describe('connect-base64', function () {
 
     request(app)
       .post('/')
-      .query({ data: new Buffer(body).toString('base64') })
+      .query({ data: encode(body) })
       .expect(200, done);
   });
 
@@ -76,4 +76,27 @@ describe('connect-base64', function () {
       .get('/')
       .expect(200, done);
   });
+
+
+  it('should decode urlsafe base64 encoding', function (done) {
+    var body = 'http://segment.com?o=k+v';
+    var app = express()
+      .use(base64())
+      .all('/', function (req, res) {
+         assert(req.body === body);
+        res.end();
+      });
+
+    request(app)
+      .get('/')
+      .query({ data: encode(body) })
+      .expect(200, done);
+  });
 });
+
+function encode(str){
+  return new Buffer(str)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
