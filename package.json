@@ -1,6 +1,6 @@
 {
   "name": "connect-base64",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connect middleware for decoding base64 requests and adding them to the request body",
   "keywords": [],
   "author": "Segment.io <team@segment.io>",
